@@ -5,7 +5,17 @@ Demonstrating how the Enum methods work in Ruby using basic keywords.
 
 This is a Microverse project. It is developed as a requirement for Microverse Ruby course.
 
-Enumerable module gets mixed into the Array and Hash classes (among others) and provide with lots of handy iteratoration methods. To prove that there's no magic to it, we rebuild those methods.
+Enumerable module gets mixed into the Array and Hash classes (among others) and provide with lots of handy iteratoration methods. To prove that there's no magic to it. We rebuild the following methods :
+
+- each
+- each_with_index
+- select
+- all
+- any
+- none
+- count
+- map
+- inject
 
 ## Built With
 
