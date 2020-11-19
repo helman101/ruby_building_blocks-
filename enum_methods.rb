@@ -37,6 +37,12 @@ module Enumerable
     my_each { |value| count += 1 if yield(value) == true }
     count == length
   end
+
+  def my_any?
+    count = 0
+    my_each { |value| break count += 1 if yield(value) == true }
+    count.positive?
+  end
 end
 
 hash = { 'twenty' => 20, 'thirty' => 30, 'fourty' => 40 }
@@ -54,3 +60,7 @@ puts([20, 30, 40].my_select { |value| value > 20 })
 # All method
 puts(hash.my_all? { |key, value| value > 10 && key.instance_of?(String) })
 puts([20, 30, 40].my_all? { |value| value > 10 })
+
+# Any method
+puts(hash.my_any? { |key, value| value == 20 && key.instance_of?(String) })
+puts([20, 30, 40].my_any? { |value| value == 20 })
