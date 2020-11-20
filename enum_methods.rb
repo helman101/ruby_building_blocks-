@@ -62,13 +62,18 @@ module Enumerable
     end
   end
 
-  def my_map
-    if block_given?
-      result = []
-      my_each { |key, value| result.push(yield(key, value)) }
-      result
+  def my_map(proc = nil)
+    result = []
+    if proc.nil?
+      if block_given?
+        my_each { |key, value| result.push(yield(key, value)) }
+        result
+      else
+        self
+      end
     else
-      self
+      my_each { |key, value| result.push(proc.call(key, value)) }
+      result
     end
   end
 
@@ -134,6 +139,8 @@ end
 p multiply_els([2, 4, 5])
 
 # My_map using Proc
-p '--------'
 my_proc = proc { |x| x**3 }
-p [4, 5, 6].my_map(&my_proc)
+p [4, 5, 6].my_map(my_proc)
+
+# Giving to my_map a Proc and Block
+p [4, 5, 6].my_map(my_proc) { |x| x**2 }
