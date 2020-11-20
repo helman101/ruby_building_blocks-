@@ -76,7 +76,7 @@ module Enumerable
     count = 1
     if arg == self[0]
       my_each do |_value|
-        if (count) < length
+        if count < length
           arg = yield(arg, self[count])
           count += 1
         end
