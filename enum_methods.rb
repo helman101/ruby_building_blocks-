@@ -71,6 +71,21 @@ module Enumerable
       self
     end
   end
+
+  def my_inject(arg = self[0])
+    count = 1
+    if arg == self[0]
+      my_each do |_value|
+        if (count) < length
+          arg = yield(arg, self[count])
+          count += 1
+        end
+      end
+    else
+      my_each { |value| arg = yield(arg, value) }
+    end
+    arg
+  end
 end
 
 hash = { 'twenty' => 20, 'thirty' => 30, 'fourty' => 40 }
@@ -104,3 +119,13 @@ puts([20, 30, 40].my_count { |value| value > 20 })
 # Map method
 p(hash.my_map { |key, value| [key.upcase, value + 20] })
 p([20, 30, 40].my_map { |value| value + 20 })
+
+# Inject method
+p '--------'
+p(hash.my_inject(20) { |count, (_key, value)| count + value })
+
+p(%w[cat sheep bear].my_inject('dolphins') do |memo, word|
+  memo.length > word.length ? memo : word
+end)
+
+p([20, 30, 40].my_inject(10) { |count, value| count + value })
