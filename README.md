@@ -34,7 +34,7 @@ Prerequisites
 
 [Assignment](https://repl.it/@akshay125555/EnumerableMethodsMicroverse)
 
-##Authors:
+## Authors:
 
 👤 **Author1**
 
