@@ -121,11 +121,19 @@ p(hash.my_map { |key, value| [key.upcase, value + 20] })
 p([20, 30, 40].my_map { |value| value + 20 })
 
 # Inject method
-p '--------'
 p(hash.my_inject(20) { |count, (_key, value)| count + value })
-
 p(%w[cat sheep bear].my_inject('dolphins') do |memo, word|
   memo.length > word.length ? memo : word
 end)
-
 p([20, 30, 40].my_inject(10) { |count, value| count + value })
+
+# Multiply_els using my_inject
+def multiply_els(arg)
+  arg.my_inject { |counter, value| counter * value }
+end
+p multiply_els([2, 4, 5])
+
+# My_map using Proc
+p '--------'
+my_proc = proc { |x| x**3 }
+p [4, 5, 6].my_map(&my_proc)
