@@ -61,6 +61,16 @@ module Enumerable
       puts 'No Block Given'
     end
   end
+
+  def my_map
+    if block_given?
+      result = []
+      my_each { |key, value| result.push(yield(key, value)) }
+      result
+    else
+      self
+    end
+  end
 end
 
 hash = { 'twenty' => 20, 'thirty' => 30, 'fourty' => 40 }
@@ -90,3 +100,7 @@ puts([20, 30, 40].my_none? { |value| value > 50 })
 # Count method
 puts(hash.my_count { |key, value| value > 30 && key.instance_of?(String) })
 puts([20, 30, 40].my_count { |value| value > 20 })
+
+# Map method
+p(hash.my_map { |key, value| [key.upcase, value + 20] })
+p([20, 30, 40].my_map { |value| value + 20 })
