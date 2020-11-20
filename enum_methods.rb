@@ -49,6 +49,18 @@ module Enumerable
     my_each { |value| break count += 1 if yield(value) == true }
     !count.positive?
   end
+
+  def my_count
+    count = 0
+    if block_given?
+      my_each do |value|
+        count += 1 if yield(value) == true
+      end
+      count
+    else
+      puts 'No Block Given'
+    end
+  end
 end
 
 hash = { 'twenty' => 20, 'thirty' => 30, 'fourty' => 40 }
@@ -74,3 +86,7 @@ puts([20, 30, 40].my_any? { |value| value == 20 })
 # None method
 puts(hash.my_none? { |key, value| value > 50 && key.instance_of?(String) })
 puts([20, 30, 40].my_none? { |value| value > 50 })
+
+# Count method
+puts(hash.my_count { |key, value| value > 30 && key.instance_of?(String) })
+puts([20, 30, 40].my_count { |value| value > 20 })
