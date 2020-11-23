@@ -24,8 +24,10 @@ p([nil, true, 99].my_any?)
 p((5..10).my_any? { |x| x > 6 && x.is_a?(Numeric) })
 
 # None method
-puts(hash.my_none? { |key, value| value > 50 && key.instance_of?(String) })
-puts([20, 30, 40].my_none? { |value| value > 50 })
+p((5..10).my_none?(1))
+p %w[ant bear cat].my_none?(/z/)
+p([nil].my_none?)
+p((5..10).my_none? { |x| x > 6 && x.is_a?(Numeric) })
 
 # Count method
 puts(hash.my_count { |key, value| value > 30 && key.instance_of?(String) })
@@ -36,11 +38,14 @@ p(hash.my_map { |key, value| [key.upcase, value + 20] })
 p([20, 30, 40].my_map { |value| value + 20 })
 
 # Inject method
-p(hash.my_inject(20) { |count, (_key, value)| count + value })
-p(%w[cat sheep bear].my_inject('dolphins') do |memo, word|
+p((5..10).my_inject(:+))
+p([1, 2, 3].my_inject(1) { |sum, n| sum + n })
+p((5..10).my_inject(1, :*))
+p((5..10).my_inject(1) { |product, n| product + n })
+longest = %w[cat sheep bear].inject do |memo, word|
   memo.length > word.length ? memo : word
-end)
-p([20, 30, 40].my_inject(10) { |count, value| count + value })
+end
+p longest
 
 # Multiply_els using my_inject
 def multiply_els(arg)

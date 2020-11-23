@@ -107,10 +107,38 @@ module Enumerable
     count.negative?
   end
 
-  def my_none?
+  def my_none?(arg = nil)
     count = 0
-    my_each { |value| break count += 1 if yield(value) == true }
-    !count.positive?
+    unless arg.nil?
+      case arg
+      when Class
+        my_each do |value|
+          count -= 1 if value.is_a?(arg)
+          break if count.negative?
+        end
+      when Regexp
+        my_each do |value|
+          count -= 1 if value.match(arg)
+          break if count.negative?
+        end
+      else
+        my_each do |value|
+          count -= 1 if value == arg
+          break if count.negative?
+        end
+      end
+      return count.negative? ? false : true
+    end
+
+    if block_given?
+      my_each do |value|
+        count -= 1 if yield(value)
+        break if count.negative?
+      end
+      count.negative? ? false : true
+    else
+      include?(true) ? false : true
+    end
   end
 
   def my_count(arg = nil)
@@ -142,18 +170,40 @@ module Enumerable
     end
   end
 
-  def my_inject(arg = self[0])
-    count = 1
-    if arg == self[0]
+  def my_inject(arg = nil, arg1 = nil)
+    arr = is_a?(Range) ? to_a : self
+    count = 0
+    if block_given? && arg.nil?
+      first = arr[count]
       my_each do |_value|
-        if count < length
-          arg = yield(arg, self[count])
-          count += 1
+        first = yield(first, arr[count + 1])
+        count += 1 if count < arr.length - 1
+        break if count == arr.length - 1
+      end
+      first
+    elsif block_given? && !arg.nil? && arg1.nil?
+      first = arg
+      my_each do |_value|
+        first = yield(first, arr[count])
+        count += 1 if count < arr.length
+        break if count == arr.length
+      end
+      first
+    elsif !block_given? && !arg.nil? && arg1.nil?
+      if arg.is_a?(Symbol) || arg.is_a?(String)
+        my_each do |value|
+          count = count.send arg, value
         end
       end
-    else
-      my_each { |value| arg = yield(arg, value) }
+      count
+    elsif !block_given? && !arg.nil? && !arg1.nil?
+      if arg1.is_a?(Symbol) || arg1.is_a?(String)
+        count = arg
+        my_each do |value|
+          count = count.send arg1, value
+        end
+      end
+      count
     end
-    arg
   end
 end
