@@ -36,16 +36,75 @@ module Enumerable
     end
   end
 
-  def my_all?
+  def my_all?(arg = nil)
     count = 0
-    my_each { |value| count += 1 if yield(value) == true }
-    count == length
+    unless arg.nil?
+      case arg
+      when Class
+        my_each do |value|
+          count -= 1 unless value.is_a?(arg)
+          break if count.negative?
+        end
+      when Regexp
+        my_each do |value|
+          count -= 1 unless value.match(arg)
+          break if count.negative?
+        end
+      else
+        my_each do |value|
+          count -= 1 if value == arg
+          break if count.negative?
+        end
+      end
+      return count.negative? ? false : true
+    end
+
+    if block_given?
+      my_each do |value|
+        count -= 1 if yield(value)
+        break if count.negative?
+      end
+      count.negative? ? false : true
+    else
+      include?(nil) || include?(false) ? false : true
+    end
   end
 
-  def my_any?
+  def my_any?(arg = nil)
     count = 0
-    my_each { |value| break count += 1 if yield(value) == true }
-    count.positive?
+    unless arg.nil?
+      case arg
+      when Class
+        my_each do |value|
+          count -= 1 if value.is_a?(arg)
+          break if count.negative?
+        end
+      when Regexp
+        my_each do |value|
+          count -= 1 if value.match(arg)
+          break if count.negative?
+        end
+      else
+        my_each do |value|
+          count -= 1 if value == arg
+          break if count.negative?
+        end
+      end
+      return count.negative?
+    end
+
+    if block_given?
+      my_each do |value|
+        count -= 1 if yield(value)
+        break if count.negative?
+      end
+    else
+      my_each do |value|
+        count -= 1 unless value.nil? || value == false
+        break if count.negative?
+      end
+    end
+    count.negative?
   end
 
   def my_none?

@@ -13,12 +13,15 @@ puts(hash.my_select { |key, value| value > 20 && key.instance_of?(String) })
 puts([20, 30, 40].my_select { |value| value > 20 })
 
 # All method
-puts(hash.my_all? { |key, value| value > 10 && key.instance_of?(String) })
-puts([20, 30, 40].my_all? { |value| value > 10 })
+p((5..10).my_all?(Integer))
+p [nil, true, 99].my_all?
+p((5..10).my_all? { |x| x > 6 && x.is_a?(Numeric) })
 
 # Any method
-puts(hash.my_any? { |key, value| value == 20 && key.instance_of?(String) })
-puts([20, 30, 40].my_any? { |value| value == 20 })
+p((5..10).my_any?)
+p %w[ant bear cat].my_any?('a')
+p([nil, true, 99].my_any?)
+p((5..10).my_any? { |x| x > 6 && x.is_a?(Numeric) })
 
 # None method
 puts(hash.my_none? { |key, value| value > 50 && key.instance_of?(String) })
