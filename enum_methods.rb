@@ -177,35 +177,30 @@ module Enumerable
     end
   end
 
-  def my_inject(arg = nil, arg1 = nil)
-    arr = is_a?(Range) ? to_a : self
-    count = 0
-    if block_given? && arg.nil?
-      first = arr[count]
-      my_each do |_value|
-        first = yield(first, arr[count + 1])
-        count += 1 if count < arr.length - 1
-        break if count == arr.length - 1
-      end
-      first
-    elsif block_given? && !arg.nil? && arg1.nil?
-      first = arg
-      my_each do |_value|
-        first = yield(first, arr[count])
-        count += 1 if count < arr.length
-        break if count == arr.length
-      end
-      first
-    elsif !block_given? && !arg.nil? && arg1.nil?
-      my_each { |value| count = count.send arg, value } if arg.is_a?(Symbol) || arg.is_a?(String)
-      count
-    elsif !block_given? && !arg.nil? && !arg1.nil?
-      if arg1.is_a?(Symbol) || arg1.is_a?(String)
-        count = arg
-        my_each { |value| count = count.send arg1, value }
-      end
-      count
+  def my_inject(arg1 = nil, arg2 = nil)
+    raise LocalJumpError unless block_given? || !arg1.nil?
+
+    if (!arg1.nil? && arg2.nil?) && (arg1.is_a?(Symbol) || arg2.is_a?(String))
+      arg2 = arg1
+      arg1 = nil
     end
+    arr = is_a?(Range) ? to_a : self
+    if !block_given? && !arg2.nil?
+      arr.my_each do |value|
+        arg1 = if arg1.nil?
+                 value
+               else
+                 arg1.send(arg2, value)
+               end
+      end
+    else
+      arg1 = if arg1.nil?
+               value
+             else
+               yield(arg1, value)
+             end
+    end
+    arg1
   end
 end
 
