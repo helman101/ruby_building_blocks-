@@ -52,7 +52,7 @@ module Enumerable
         end
       else
         my_each do |value|
-          count -= 1 if value == arg
+          count -= 1 unless value == arg
           break if count.negative?
         end
       end
@@ -60,8 +60,9 @@ module Enumerable
     end
 
     if block_given?
+      p 'hi'
       my_each do |value|
-        count -= 1 if yield(value)
+        count -= 1 unless yield(value)
         break if count.negative?
       end
       count.negative? ? false : true
@@ -207,3 +208,9 @@ module Enumerable
     end
   end
 end
+
+# Multiply_els using my_inject
+def multiply_els(arg)
+  arg.my_inject { |counter, value| counter * value }
+end
+p multiply_els([2, 4, 5])

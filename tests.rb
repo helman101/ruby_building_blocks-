@@ -47,12 +47,6 @@ longest = %w[cat sheep bear].inject do |memo, word|
 end
 p longest
 
-# Multiply_els using my_inject
-def multiply_els(arg)
-  arg.my_inject { |counter, value| counter * value }
-end
-p multiply_els([2, 4, 5])
-
 # My_map using Proc
 my_proc = proc { |x| x**3 }
 p [4, 5, 6].my_map(my_proc)
