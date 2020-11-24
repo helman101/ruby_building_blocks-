@@ -60,7 +60,6 @@ module Enumerable
     end
 
     if block_given?
-      p 'hi'
       my_each do |value|
         count -= 1 unless yield(value)
         break if count.negative?
@@ -138,7 +137,10 @@ module Enumerable
       end
       count.negative? ? false : true
     else
-      include?(true) ? false : true
+      my_each do |value|
+        return false unless value.nil? || value == false
+      end
+      true
     end
   end
 
@@ -156,11 +158,15 @@ module Enumerable
     count
   end
 
+  # #8 my_map
   def my_map(proc = nil)
     result = []
     if proc.nil?
-      if block_given?
+      if block_given? && is_a?(Hash)
         my_each { |key, value| result.push(yield(key, value)) }
+        result
+      elsif block_given?
+        my_each { |key| result.push(yield(key)) }
         result
       else
         to_enum(:my_map)
@@ -191,18 +197,12 @@ module Enumerable
       end
       first
     elsif !block_given? && !arg.nil? && arg1.nil?
-      if arg.is_a?(Symbol) || arg.is_a?(String)
-        my_each do |value|
-          count = count.send arg, value
-        end
-      end
+      my_each { |value| count = count.send arg, value } if arg.is_a?(Symbol) || arg.is_a?(String)
       count
     elsif !block_given? && !arg.nil? && !arg1.nil?
       if arg1.is_a?(Symbol) || arg1.is_a?(String)
         count = arg
-        my_each do |value|
-          count = count.send arg1, value
-        end
+        my_each { |value| count = count.send arg1, value }
       end
       count
     end
