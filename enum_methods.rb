@@ -194,11 +194,13 @@ module Enumerable
                end
       end
     else
-      arg1 = if arg1.nil?
-               value
-             else
-               yield(arg1, value)
-             end
+      arr.my_each do |value|
+        arg1 = if arg1.nil?
+                 value
+               else
+                 yield(arg1, value)
+               end
+      end
     end
     arg1
   end
