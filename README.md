@@ -44,7 +44,7 @@ Prerequisites
 👤 **Author2**
 
 - Github: [@helman101](https://github.com/helman101)
-- Linkedin: [Linkedin](https://www.linkedin.com/in/helman-andres-5187271b1/)
+- Linkedin: [Linkedin](https://www.linkedin.com/in/helman101/)
 
 ## 🤝 Contributing
 
