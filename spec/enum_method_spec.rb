@@ -36,4 +36,22 @@ describe Enumerable do
       expect(hash.my_select { |_key, value| value > 20 }).to eql(hash.select { |_key, value| value > 20 })
     end
   end
+
+  describe '#my_all?' do
+    it 'returns true if all elements satisfy a given condition' do
+      expect(array.my_all? { |value| value > 10 }).to eql(true)
+    end
+    it 'works with ranges' do
+      expect(range.my_all? { |x| x > 6 && x.is_a?(Numeric) }).to eql(false)
+    end
+    it 'with an classes' do
+      expect(range.my_all?(Integer)).to eql(true)
+    end
+    it 'works with regexp' do
+      expect(string.my_all?(/a/)).to eql(true)
+    end
+    it 'returns false if block and arguments is missing and the object is false or nil' do
+      expect(nil_array.my_all?).to eql(false)
+    end
+  end
 end
