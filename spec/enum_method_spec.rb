@@ -54,6 +54,7 @@ describe Enumerable do
       expect(nil_array.my_all?).to eql(false)
     end
   end
+
   describe '#my_any?' do
     it 'returns true if at least one element satisfy a given condition' do
       expect(array.my_any? { |value| value == 20 }).to eql(true)
@@ -71,6 +72,7 @@ describe Enumerable do
       expect(nil_array.my_any?).to eql(true)
     end
   end
+
   describe '#my_none?' do
     it 'return true if block never returns true for all elements' do
       expect(string.my_none? { |value| value.length > 10 }).to eql(true)
@@ -88,6 +90,7 @@ describe Enumerable do
       expect(nil_array.my_none?).to eql(false)
     end
   end
+
   describe '#my_count' do
     it 'counts the number of elements that satisfy the given condition' do
       expect(string.my_count { |value| value.include?('e') }).to eql(2)
@@ -99,6 +102,7 @@ describe Enumerable do
       expect(string.my_count).to eql(3)
     end
   end
+
   describe '#my_map' do
     it 'Returns a new array with the results of running block ' do
       expect(array.my_map { |value| value + 20 }).to eql([40, 50, 60])
@@ -110,6 +114,7 @@ describe Enumerable do
       expect(array.my_map(my_proc) { |x| x * 2 }).to eql([60, 90, 120])
     end
   end
+
   describe '#my_inject' do
     it 'Combines all elements of enum by applying a binary operation specified by a block' do
       expect(array.my_inject { |sum, n| sum + n }).to eql(90)
@@ -123,5 +128,11 @@ describe Enumerable do
     it 'tha accumulator takes the arg value if its specified with block' do
       expect(array.my_inject(1) { |sum, n| sum + n }).to eql(91)
     end
+  end
+end
+
+describe '#multiply_els' do
+  it 'multiplies all the elements of the array together' do
+    expect(multiply_els([4, 5, 6])).to eql(120)
   end
 end
