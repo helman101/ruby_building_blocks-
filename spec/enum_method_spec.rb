@@ -27,4 +27,13 @@ describe Enumerable do
     end
   end
 
+  describe '#my_select' do
+    it 'return the selected elements from an array' do
+      expect(array.my_select { |value| value > 20 }).to eql(array.select { |value| value > 20 })
+    end
+
+    it 'return the selected elements from hash' do
+      expect(hash.my_select { |_key, value| value > 20 }).to eql(hash.select { |_key, value| value > 20 })
+    end
+  end
 end
