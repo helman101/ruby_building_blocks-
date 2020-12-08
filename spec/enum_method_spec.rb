@@ -110,4 +110,18 @@ describe Enumerable do
       expect(array.my_map(my_proc) { |x| x * 2 }).to eql([60, 90, 120])
     end
   end
+  describe '#my_inject' do
+    it 'Combines all elements of enum by applying a binary operation specified by a block' do
+      expect(array.my_inject { |sum, n| sum + n }).to eql(90)
+    end
+    it 'Combines all elements of enum by applying a binary operation specified by a symbol' do
+      expect(array.my_inject(:+)).to eql(90)
+    end
+    it 'tha accumulator takes the arg value if its specified with symbol' do
+      expect(array.my_inject(2, :*)).to eql(48_000)
+    end
+    it 'tha accumulator takes the arg value if its specified with block' do
+      expect(array.my_inject(1) { |sum, n| sum + n }).to eql(91)
+    end
+  end
 end
