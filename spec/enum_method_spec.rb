@@ -17,4 +17,14 @@ describe Enumerable do
       expect(hash.my_each { |key, value| puts "this is my key #{key} and this is my value #{value}" }).to eql(hash)
     end
   end
+
+  describe '#my_each_with_index' do
+    it 'return a index with each element' do
+      expect(hash.my_each_with_index { |value, index| puts "values #{value}, index #{index}" }).to eql(hash)
+    end
+    it 'return a index with each element' do
+      expect(array.my_each_with_index { |value, index| puts "value #{value}, index #{index}" }).to eql(array)
+    end
+  end
+
 end
