@@ -54,4 +54,21 @@ describe Enumerable do
       expect(nil_array.my_all?).to eql(false)
     end
   end
+  describe '#my_any?' do
+    it 'returns true if at least one element satisfy a given condition' do
+      expect(array.my_any? { |value| value == 20 }).to eql(true)
+    end
+    it 'works with ranges' do
+      expect(range.my_any? { |x| x < 3 }).to eql(true)
+    end
+    it 'with an classes' do
+      expect(string.my_any?(String)).to eql(true)
+    end
+    it 'works with regexp' do
+      expect(string.my_any?(/p/)).to eql(true)
+    end
+    it 'returns false if block and arguments is missing and at least one object is diferent from false or nil' do
+      expect(nil_array.my_any?).to eql(true)
+    end
+  end
 end
