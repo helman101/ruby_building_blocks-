@@ -88,4 +88,15 @@ describe Enumerable do
       expect(nil_array.my_none?).to eql(false)
     end
   end
+  describe '#my_count' do
+    it 'counts the number of elements that satisfy the given condition' do
+      expect(string.my_count { |value| value.include?('e') }).to eql(2)
+    end
+    it 'counts the number of elements that are equal to the given argument' do
+      expect(array.my_count(20)).to eql(1)
+    end
+    it 'returns the count of all elements if no block nor argument is given' do
+      expect(string.my_count).to eql(3)
+    end
+  end
 end
