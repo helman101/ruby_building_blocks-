@@ -99,4 +99,15 @@ describe Enumerable do
       expect(string.my_count).to eql(3)
     end
   end
+  describe '#my_map' do
+    it 'Returns a new array with the results of running block ' do
+      expect(array.my_map { |value| value + 20 }).to eql([40, 50, 60])
+    end
+    it 'able to use Proc object ' do
+      expect(array.my_map(my_proc)).to eql([60, 90, 120])
+    end
+    it 'if proc and block given it goes with proc' do
+      expect(array.my_map(my_proc) { |x| x * 2 }).to eql([60, 90, 120])
+    end
+  end
 end
