@@ -71,4 +71,21 @@ describe Enumerable do
       expect(nil_array.my_any?).to eql(true)
     end
   end
+  describe '#my_none?' do
+    it 'return true if block never returns true for all elements' do
+      expect(string.my_none? { |value| value.length > 10 }).to eql(true)
+    end
+    it 'works with ranges' do
+      expect(range.my_none? { |value| value > 6 }).to eql(true)
+    end
+    it 'works with an class' do
+      expect(range.my_none?(Numeric)).to eql(false)
+    end
+    it 'works with an regexp' do
+      expect(string.my_none?(/x/)).to eql(true)
+    end
+    it 'returns true if block and arguments is missing and all object are false or nil' do
+      expect(nil_array.my_none?).to eql(false)
+    end
+  end
 end
