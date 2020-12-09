@@ -9,12 +9,14 @@ describe Enumerable do
   let(:my_proc) { proc { |x| x * 3 } }
 
   describe '#my_each' do
-    context 'return same object' do
-      it 'when a block is given ' do
-        expect(array.my_each { |value| puts "this is my value #{value}" }).to eql(array)
+    context 'when a block is given' do
+      it 'return same object' do
+        expect(array.my_each { |value| "this is my value #{value}" }).to eql(array)
       end
+    end
 
-      it 'when a block is missing' do
+    context 'when the block is missing' do
+      it 'return an enumerator' do
         expect(hash.my_each).to_not eql(hash)
         expect(hash.my_each).to be_an(Enumerator)
       end
@@ -22,11 +24,16 @@ describe Enumerable do
   end
 
   describe '#my_each_with_index' do
-    it 'return a index with each element' do
-      expect(hash.my_each_with_index { |value, index| puts "values #{value}, index #{index}" }).to eql(hash)
+    context 'when a block is given' do
+      it 'return the same object' do
+        expect(hash.my_each_with_index { |value, index| "values #{value}, index #{index}" }).to eql(hash)
+      end
     end
-    it 'return a index with each element' do
-      expect(array.my_each_with_index { |value, index| puts "value #{value}, index #{index}" }).to eql(array)
+    context 'when the block is missing' do
+      it 'return an enumerator' do
+        expect(hash.my_each_with_index).to_not eql(hash)
+        expect(hash.my_each_with_index).to be_an(Enumerator)
+      end
     end
   end
 
