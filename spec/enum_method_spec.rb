@@ -1,4 +1,4 @@
-require './lib/enum_methods'
+require_relative '../lib/enum_methods'
 
 describe Enumerable do
   let(:array) { [20, 30, 40] }
