@@ -152,26 +152,25 @@ describe Enumerable do
     end
   end
 
-  describe '#my_map' do 
+  describe '#my_map' do
     context 'when a block is given' do
-    it 'Returns a new array with the results of running block ' do
-      expect(array.my_map { |value| value + 20 }).to eql([40, 50, 60])
-    end 
-  end
-    context 'when a proc is given' do
-    it 'able to use Proc object ' do
-      expect(array.my_map(my_proc)).to eql([60, 90, 120])
-    end 
-  end  
-  context 'when a proc and block is given'  do
-    it 'runs only with proc' do
-      expect(array.my_map(my_proc) { |x| x * 2 }).to eql([60, 90, 120])
+      it 'Returns a new array with the results' do
+        expect(array.my_map { |value| value + 20 }).to eql([40, 50, 60])
+      end
     end
-  end
+    context 'when a proc is given' do
+      it 'is able to use Proc object' do
+        expect(array.my_map(my_proc)).to eql([60, 90, 120])
+      end
+    end
+    context 'when a proc and block is given' do
+      it 'runs only with proc' do
+        expect(array.my_map(my_proc) { |x| x * 2 }).to eql([60, 90, 120])
+      end
+    end
   end
 
   describe '#my_inject' do
-
     context 'when only a block is given' do
       it 'combines all elements by applying an operation' do
         expect(array.my_inject { |sum, n| sum + n }).to eql(90)
