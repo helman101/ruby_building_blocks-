@@ -213,5 +213,4 @@ def multiply_els(arg)
   arg.my_inject { |counter, value| counter * value }
 end
 
-
 # rubocop:enable Metrics/ModuleLength, Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Style/For
