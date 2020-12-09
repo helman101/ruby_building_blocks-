@@ -16,7 +16,7 @@ Enumerable module gets mixed into the Array and Hash classes (among others) and 
 - map
 - inject
 
-![screenshot](./img/enumerables_screenshot)
+![screenshot](img/enumerables_screenshot.PNG)
 
 ## Built With
 
