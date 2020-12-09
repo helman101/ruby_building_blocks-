@@ -1,3 +1,5 @@
+# rubocop:disable Metrics/ModuleLength, Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Style/For
+
 module Enumerable
   def my_each
     if block_given?
@@ -210,4 +212,5 @@ end
 def multiply_els(arg)
   arg.my_inject { |counter, value| counter * value }
 end
-p multiply_els([2, 4, 5])
+
+# rubocop:enable Metrics/ModuleLength, Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Style/For

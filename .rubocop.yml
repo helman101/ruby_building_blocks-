@@ -1,4 +1,3 @@
-
 AllCops:
   Exclude:
     - "Guardfile"
@@ -9,13 +8,7 @@ AllCops:
 Layout/LineLength:
   Max: 120
 Metrics/MethodLength:
-  Max: 100
-Metrics/ModuleLength:
-  Max: 200
-Metrics/PerceivedComplexity:
-  Enabled: false
-Metrics/CyclomaticComplexity:
-  Enabled: false
+  Max: 20
 Metrics/AbcSize:
   Max: 50
 Metrics/ClassLength:
@@ -34,8 +27,6 @@ Style/EachForSimpleLoop:
 Style/AndOr:
   Enabled: false
 Style/DefWithParentheses:
-  Enabled: false
-Style/For:
   Enabled: false
 Style/FrozenStringLiteralComment:
   EnforcedStyle: never
