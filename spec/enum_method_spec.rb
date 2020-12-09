@@ -9,12 +9,15 @@ describe Enumerable do
   let(:my_proc) { proc { |x| x * 3 } }
 
   describe '#my_each' do
-    it 'return same array' do
-      expect(array.my_each { |value| puts "this is my value #{value}" }).to eql(array)
-    end
+    context 'return same object' do
+      it 'when a block is given ' do
+        expect(array.my_each { |value| puts "this is my value #{value}" }).to eql(array)
+      end
 
-    it 'return same hash' do
-      expect(hash.my_each { |key, value| puts "this is my key #{key} and this is my value #{value}" }).to eql(hash)
+      it 'when a block is missing' do
+        expect(hash.my_each).to_not eql(hash)
+        expect(hash.my_each).to be_an(Enumerator)
+      end
     end
   end
 
