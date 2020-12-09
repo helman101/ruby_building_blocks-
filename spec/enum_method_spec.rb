@@ -39,33 +39,42 @@ describe Enumerable do
 
   describe '#my_select' do
     context 'when a block is given' do
-    it 'return the selected elements from an object' do
-      expect(array.my_select { |value| value > 20 }).to eql(array.select { |value| value > 20 })
+      it 'return the selected elements from an object' do
+        expect(array.my_select { |value| value > 20 }).to eql(array.select { |value| value > 20 })
+      end
     end
-  end
-   context 'when a block is missing' do
-    it 'returns an enumerator object' do
-      expect(hash.my_select ).to_not eql( hash)
-      expect(hash.my_select).to be_an(Enumerator)
+    context 'when a block is missing' do
+      it 'returns an enumerator' do
+        expect(hash.my_select).to_not eql(hash)
+        expect(hash.my_select).to be_an(Enumerator)
+      end
     end
-  end
   end
 
   describe '#my_all?' do
-    it 'returns true if all elements satisfy a given condition' do
-      expect(array.my_all? { |value| value > 10 }).to eql(true)
+    it 'work with ranges' do
+      expect(range.my_all? { |x| x > 6 && x.is_a?(Numeric) }).to be_falsy
     end
-    it 'works with ranges' do
-      expect(range.my_all? { |x| x > 6 && x.is_a?(Numeric) }).to eql(false)
+
+    context 'when a block is given' do
+      it 'returns true if all elements satisfy a given condition' do
+        expect(array.my_all? { |value| value > 10 }).to be_truthy
+      end
     end
-    it 'with an classes' do
-      expect(range.my_all?(Integer)).to eql(true)
+
+    context 'when a argument is given' do
+      it 'takes with classes' do
+        expect(range.my_all?(Integer)).to be_truthy
+      end
+      it 'takes with regexp' do
+        expect(string.my_all?(/a/)).to be_truthy
+      end
     end
-    it 'works with regexp' do
-      expect(string.my_all?(/a/)).to eql(true)
-    end
-    it 'returns false if block and arguments is missing and the object is false or nil' do
-      expect(nil_array.my_all?).to eql(false)
+
+    context 'when an argument nor a block is given' do
+      it 'returns true only if the objects are not false or nil' do
+        expect(nil_array.my_all?).not_to be_truthy
+      end
     end
   end
 
