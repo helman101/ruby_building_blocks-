@@ -38,13 +38,17 @@ describe Enumerable do
   end
 
   describe '#my_select' do
-    it 'return the selected elements from an array' do
+    context 'when a block is given' do
+    it 'return the selected elements from an object' do
       expect(array.my_select { |value| value > 20 }).to eql(array.select { |value| value > 20 })
     end
-
-    it 'return the selected elements from hash' do
-      expect(hash.my_select { |_key, value| value > 20 }).to eql(hash.select { |_key, value| value > 20 })
+  end
+   context 'when a block is missing' do
+    it 'returns an enumerator object' do
+      expect(hash.my_select ).to_not eql( hash)
+      expect(hash.my_select).to be_an(Enumerator)
     end
+  end
   end
 
   describe '#my_all?' do
