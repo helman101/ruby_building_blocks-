@@ -73,52 +73,63 @@ describe Enumerable do
 
     context 'when an argument nor a block is given' do
       it 'returns true only if the objects are not false or nil' do
-        expect(nil_array.my_all?).not_to be_truthy
+        expect(nil_array.my_all?).to_not be_truthy
       end
     end
   end
 
   describe '#my_any?' do
-    it 'returns true if at least one element satisfy a given condition' do
-      expect(array.my_any? { |value| value == 20 }).to eql(true)
-    end
-    context 'when a block is given' do
     it 'works with ranges' do
-      expect(range.my_any? { |x| x < 3 }).to eql(true)
+      expect(range.my_any? { |x| x < 3 }).to be_truthy
     end
-  end
-  context 'when an argument is given' do
-    it 'with an classes' do
-      expect(string.my_any?(String)).to eql(true) 
-      expect(string.my_any?(Numeric)).to_not eql(String)
+
+    context 'when a block is given' do
+      it 'returns true if at least one element satisfy a given condition' do
+        expect(array.my_any? { |value| value == 20 }).to be_truthy
+      end
     end
-  
-    it 'works with regexp' do
-      expect(string.my_any?(/p/)).to eql(true)
+
+    context 'when an argument is given' do
+      it 'work with classes' do
+        expect(string.my_any?(String)).to be_truthy
+        expect(string.my_any?(Numeric)).to_not be_truthy
+      end
+
+      it 'work with regexp' do
+        expect(string.my_any?(/p/)).to be_truthy
+      end
     end
-  end
-  context 'when block and argument both are missing' do
-    it 'returns false if  at least one object is diferent from false or nil' do
-      expect(nil_array.my_any?).to eql(true)
+    context 'when block and argument are missing' do
+      it 'returns false if at least one object is diferent from false or nil' do
+        expect(nil_array.my_any?).to_not be_falsy
+      end
     end
-  end
   end
 
   describe '#my_none?' do
-    it 'return true if block never returns true for all elements' do
-      expect(string.my_none? { |value| value.length > 10 }).to eql(true)
-    end
     it 'works with ranges' do
-      expect(range.my_none? { |value| value > 6 }).to eql(true)
+      expect(range.my_none? { |value| value > 6 }).to be_truthy
     end
-    it 'works with an class' do
-      expect(range.my_none?(Numeric)).to eql(false)
+
+    context 'when a block is given' do
+      it 'return true if all element are false' do
+        expect(string.my_none? { |value| value.length > 10 }).to be_truthy
+      end
     end
-    it 'works with an regexp' do
-      expect(string.my_none?(/x/)).to eql(true)
+
+    context 'when a argument is given' do
+      it 'works with an class' do
+        expect(range.my_none?(Numeric)).to_not be_truthy
+      end
+      it 'works with an regexp' do
+        expect(string.my_none?(/x/)).to be_truthy
+      end
     end
-    it 'returns true if block and arguments is missing and all object are false or nil' do
-      expect(nil_array.my_none?).to eql(false)
+
+    context 'when a block and argument are missing' do
+      it 'returns true if all object are false or nil' do
+        expect(nil_array.my_none?).to_not be_truthy
+      end
     end
   end
 
