@@ -134,29 +134,22 @@ describe Enumerable do
   end
 
   describe '#my_count' do
-    it 'counts the number of elements that satisfy the given condition' do
-      expect(string.my_count { |value| value.include?('e') }).to eql(2)
-    end
-    
-    context 'when only an argument is given' do
-    it 'counts the number of elements that are equal to the given argument' do
-      expect(array.my_count(20)).to eql(1) 
-      expect(array.my_count(15)).to_not eql(1)
-    end
-  end
-    context 'when block and argument both are missing' do 
-      it 'returns the count of all elements' do
-        expect(string.my_count ).to eql(3)
+    context 'when only block is given' do
+      it 'return the number of elements that satisfy the given condition' do
+        expect(string.my_count { |value| value.include?('e') }).to eql(2)
       end
     end
-    context 'when only block is being passed' do
-      it 'counts the number of elements that satisfy the given condition' do
-        expect(string.my_count { |value| value.include?('e') }).to eql(2)
-      
+    context 'when only an argument is given' do
+      it 'return the number of elements that are equal to the given argument' do
+        expect(array.my_count(20)).to eql(1)
+        expect(array.my_count(15)).to_not eql(1)
+      end
     end
+    context 'when block and argument both are missing' do
+      it 'returns the count of all elements' do
+        expect(string.my_count).to eql(3)
+      end
     end
-  
-    
   end
 
   describe '#my_map' do
@@ -172,17 +165,29 @@ describe Enumerable do
   end
 
   describe '#my_inject' do
-    it 'Combines all elements of enum by applying a binary operation specified by a block' do
-      expect(array.my_inject { |sum, n| sum + n }).to eql(90)
+
+    context 'when only a block is given' do
+      it 'combines all elements by applying an operation' do
+        expect(array.my_inject { |sum, n| sum + n }).to eql(90)
+      end
     end
-    it 'Combines all elements of enum by applying a binary operation specified by a symbol' do
-      expect(array.my_inject(:+)).to eql(90)
+
+    context 'when just one argument is given' do
+      it 'apply an operation if is a symbol' do
+        expect(array.my_inject(:+)).to eql(90)
+      end
     end
-    it 'tha accumulator takes the arg value if its specified with symbol' do
-      expect(array.my_inject(2, :*)).to eql(48_000)
+
+    context 'when two arguments are given' do
+      it 'the accumulator takes the first argument value and apply the symbol or string operation' do
+        expect(array.my_inject(2, :*)).to eql(48_000)
+      end
     end
-    it 'tha accumulator takes the arg value if its specified with block' do
-      expect(array.my_inject(1) { |sum, n| sum + n }).to eql(91)
+
+    context 'when only one argument and block are given' do
+      it 'the accumulator takes the argument value and apply block operation' do
+        expect(array.my_inject(1) { |sum, n| sum + n }).to eql(91)
+      end
     end
   end
 end
